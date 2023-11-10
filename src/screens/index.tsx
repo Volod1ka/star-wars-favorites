@@ -3,9 +3,13 @@ import {
   createStackNavigator,
   type StackScreenProps,
 } from '@react-navigation/stack'
+import tw from '@tools/tailwind'
+import CharacterInfoScreen from './CharacterInfo'
+import HomeTabScreen from './home'
 
 export type RootStackParamList = {
   Home: undefined
+  CharacterInfo: { id: string }
 }
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =
@@ -13,18 +17,23 @@ export type RootStackScreenProps<T extends keyof RootStackParamList> =
 
 const Stack = createStackNavigator<RootStackParamList>()
 
-const EmptyScreen = () => <></>
-
 const RootRouter = () => {
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
         headerShadowVisible: false,
+        cardStyle: tw`bg-gray-400`,
         ...TransitionPresets.SlideFromRightIOS,
       }}
     >
-      <Stack.Screen name="Home" component={EmptyScreen} />
+      <Stack.Screen name="Home" component={HomeTabScreen} />
+
+      <Stack.Screen
+        name="CharacterInfo"
+        component={CharacterInfoScreen}
+        options={{ headerShown: true, headerTitle: '' }}
+      />
     </Stack.Navigator>
   )
 }

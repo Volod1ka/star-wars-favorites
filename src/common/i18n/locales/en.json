@@ -1,4 +1,9 @@
 {
-  "ui": {},
+  "ui": {
+    "navigation": {
+      "characters": "Characters",
+      "favourites": "Favourites"
+    }
+  },
   "screens": {}
 }
