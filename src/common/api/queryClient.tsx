@@ -17,7 +17,7 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       queryFn: defaultQueryFunction,
-      cacheTime: ms('1d'),
+      gcTime: ms('1d'),
       refetchOnMount: true,
       refetchOnReconnect: true,
       refetchOnWindowFocus: true,
