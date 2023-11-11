@@ -2,7 +2,9 @@ import { useCharactersQuery } from '@api'
 import { useNavigation } from '@react-navigation/native'
 import type { RootStackScreenProps } from '@screens'
 import tw from '@tools/tailwind'
-import { ScrollView, Text, View } from 'react-native'
+import { CharacterList } from '@uikit/organisms'
+import { useCallback } from 'react'
+import { Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const CharactersScreen = () => {
@@ -10,9 +12,12 @@ const CharactersScreen = () => {
 
   const charactersQuery = useCharactersQuery()
 
-  const onPressText = (url: string) => {
-    navigation.navigate('CharacterInfo', { url })
-  }
+  const onPressCharacter = useCallback(
+    (url: string) => {
+      navigation.navigate('CharacterInfo', { url })
+    },
+    [charactersQuery.data],
+  )
 
   const onPressNextPage = () => {
     charactersQuery.fetchNextPage()
@@ -26,17 +31,11 @@ const CharactersScreen = () => {
   // TODO: remove it during the build UI phase
   return (
     <SafeAreaView style={tw`flex-1`}>
-      <ScrollView style={tw`flex-1`} contentContainerStyle={tw`items-center`}>
-        {charactersQuery.data.characters.map((character, index) => (
-          <Text
-            key={`character-${index}`}
-            style={tw`mx-5 mb-5`}
-            onPress={() => onPressText(character.url)}
-          >
-            {character.name}
-          </Text>
-        ))}
-      </ScrollView>
+      <CharacterList
+        characters={charactersQuery.data.characters}
+        selectedCharacters={[]}
+        onPressCharacter={onPressCharacter}
+      />
 
       <View>
         {disabledNextPage || (
