@@ -39,6 +39,7 @@
     "axios": "^0.27.2",
     "axios-logger": "^2.6.1",
     "i18next": "^20.6.1",
+    "lottie-react-native": "^6.4.0",
     "mobx": "^6.3.3",
     "mobx-react-lite": "^3.2.1",
     "ms": "^2.1.3",
