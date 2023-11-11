@@ -9,7 +9,7 @@ import HomeTabScreen from './home'
 
 export type RootStackParamList = {
   Home: undefined
-  CharacterInfo: { id: string }
+  CharacterInfo: { url: string }
 }
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =
