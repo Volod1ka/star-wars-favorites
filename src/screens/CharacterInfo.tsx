@@ -2,7 +2,6 @@ import { useCharacterQuery } from '@api'
 import { useRoute } from '@react-navigation/native'
 import type { RootStackScreenProps } from '@screens'
 import tw from '@tools/tailwind'
-import React from 'react'
 import { Text, View } from 'react-native'
 
 const CharacterInfoScreen = () => {

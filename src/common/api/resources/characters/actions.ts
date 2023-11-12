@@ -27,13 +27,14 @@ const getCharacters = async (
 
   const characters: CharacterShortData[] = await Promise.all(
     response.data.results.map(async item => {
-      const homeworldResponse = await axios.get<Homeworld>(item.homeworld)
+      // TODO
+      // const homeworldResponse = await axios.get<Homeworld>(item.homeworld)
 
       return {
         birth_year: item.birth_year,
         favorite: false,
         gender: item.gender,
-        homeworldName: homeworldResponse.data.name,
+        homeworldName: 'homeworldName', // homeworldResponse.data.name,
         name: item.name,
         url: item.url,
       }

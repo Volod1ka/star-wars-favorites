@@ -8,17 +8,6 @@ import { CharacterList } from '@uikit/organisms'
 import { observer } from 'mobx-react-lite'
 import { Text, View } from 'react-native'
 
-// TODO
-// const onPressNextPage = () => {
-//   charactersQuery.fetchNextPage()
-// }
-
-// TODO
-// const disabledNextPage =
-//   charactersQuery.isFetching ||
-//   charactersQuery.isFetchingNextPage ||
-//   !charactersQuery.data.hasNextPage
-
 const CharactersScreen = () => {
   const navigation = useNavigation<RootStackScreenProps<'Home'>['navigation']>()
 
@@ -26,8 +15,8 @@ const CharactersScreen = () => {
 
   const { favoritesStore } = useStore()
 
-  const onPressCharacter = (character: CharacterShortData) => {
-    favoritesStore.updateFavoriteCharacters(character)
+  const onPressCard = (data: CharacterShortData) => {
+    favoritesStore.updateFavoriteCharacters(data)
     // TODO
     // navigation.navigate('CharacterInfo', { url })
   }
@@ -41,18 +30,23 @@ const CharactersScreen = () => {
     }),
   )
 
+  const disabledLoadMore =
+    charactersQuery.isFetching ||
+    charactersQuery.isFetchingNextPage ||
+    !charactersQuery.data.hasNextPage
+
   return (
     <View style={tw`flex-1`}>
-      <CharacterList data={characters} onPressCharacter={onPressCharacter} />
+      <CharacterList data={characters} onPressCard={onPressCard} />
 
-      <Text
-        style={tw`text-white text-base font-semibold`}
-        onPress={() => {
-          favoritesStore.clearAll()
-        }}
-      >
-        CLEAR
-      </Text>
+      {disabledLoadMore || (
+        <Text
+          style={tw`self-center text-white text-base font-semibold`}
+          onPress={() => charactersQuery.fetchNextPage()}
+        >
+          LOAD MORE
+        </Text>
+      )}
     </View>
   )
 }

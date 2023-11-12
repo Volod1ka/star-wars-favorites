@@ -58,7 +58,7 @@ export default class FavoritesStore {
         character => character.url !== favorite.url,
       )
     } else {
-      this.characters.push(favorite)
+      this.characters.push({ ...favorite, favorite: true })
     }
 
     this.updateGenderRecalculation()

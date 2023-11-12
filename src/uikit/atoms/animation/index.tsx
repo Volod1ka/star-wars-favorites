@@ -1,5 +1,5 @@
 import LottieView, { type LottieViewProps } from 'lottie-react-native'
-import React, { forwardRef } from 'react'
+import { forwardRef } from 'react'
 import * as Animations from './assets'
 
 export type AnimationProps = Omit<LottieViewProps, 'source'> & {

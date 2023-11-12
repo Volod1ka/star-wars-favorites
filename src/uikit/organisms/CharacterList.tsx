@@ -4,28 +4,26 @@ import tw from '@tools/tailwind'
 import { CharacterCard } from '@uikit/molecules/rows'
 
 export type CharacterListProps = Partial<FlashListProps<CharacterShortData>> & {
-  onPressCharacter?: (data: CharacterShortData) => void
+  onPressCard?: (data: CharacterShortData) => void
 }
 
 const CharacterList = ({
   data = [],
-  onPressCharacter,
+  onPressCard,
   ...props
 }: CharacterListProps) => {
   return (
     <FlashList
       indicatorStyle="white"
-      estimatedItemSize={50}
+      estimatedItemSize={120}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
       contentContainerStyle={tw`px-4 pt-4`}
-      // TODO
-      // ListEmptyComponent={<Text style={tw`text-white`}>No DATA</Text>}
       {...props}
       data={data}
       keyExtractor={(_, index) => `character-${index}`}
       renderItem={({ item }) => (
-        <CharacterCard data={item} onPress={() => onPressCharacter?.(item)} />
+        <CharacterCard data={item} onPress={() => onPressCard?.(item)} />
       )}
     />
   )

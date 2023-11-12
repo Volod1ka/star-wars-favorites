@@ -1,3 +1,4 @@
+import { configure } from 'mobx'
 import React, { createContext, useContext, type FC } from 'react'
 import FavoritesStore from './FavoritesStore'
 
@@ -5,6 +6,7 @@ export class RootStore {
   favoritesStore: FavoritesStore
 
   constructor() {
+    configure({ enforceActions: 'always' })
     this.favoritesStore = new FavoritesStore(this)
   }
 }
