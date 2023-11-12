@@ -4,6 +4,7 @@ import type {
   CharacterExtraInfo,
   CharacterListResponseData,
   CharacterResponseData,
+  CharacterShortData,
   CharacterUrlsResponseData,
   CharactersResponseData,
 } from '@models/characters'
@@ -24,18 +25,18 @@ const getCharacters = async (
     keyToUrl(charactersUrls.root(pageParam)),
   )
 
-  const characters: Character[] = await Promise.all(
+  const characters: CharacterShortData[] = await Promise.all(
     response.data.results.map(async item => {
       const homeworldResponse = await axios.get<Homeworld>(item.homeworld)
-      const extraData: CharacterExtraInfo = {
-        homeworld: homeworldResponse.data,
-        films: [],
-        species: [],
-        vehicles: [],
-        starships: [],
-      }
 
-      return { ...item, ...extraData }
+      return {
+        birth_year: item.birth_year,
+        favorite: false,
+        gender: item.gender,
+        homeworldName: homeworldResponse.data.name,
+        name: item.name,
+        url: item.url,
+      }
     }),
   )
 
@@ -82,7 +83,7 @@ const getCharacterUrlDetails = async (
 }
 
 export default {
+  getCharacter,
   getCharacters,
   getCharacterUrlDetails,
-  getCharacter,
 }

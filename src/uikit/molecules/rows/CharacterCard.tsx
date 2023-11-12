@@ -1,4 +1,4 @@
-import type { Character } from '@models/characters'
+import type { CharacterShortData } from '@models/characters'
 import tw from '@tools/tailwind'
 import { memo } from 'react'
 import {
@@ -8,16 +8,8 @@ import {
   type TouchableOpacityProps,
 } from 'react-native'
 
-export type CharacterCardData = Pick<
-  Character,
-  'name' | 'birth_year' | 'gender'
-> & {
-  homeworldName: Character['homeworld']['name']
-}
-
 export type CharacterCardProps = Pick<TouchableOpacityProps, 'onPress'> & {
-  data: CharacterCardData
-  selected?: boolean
+  data: CharacterShortData
 }
 
 const NotchContainer = () => (
@@ -31,9 +23,10 @@ const NotchContainer = () => (
   </View>
 )
 
-const CharacterCard = ({ data, selected, onPress }: CharacterCardProps) => {
+const CharacterCard = ({ data, onPress }: CharacterCardProps) => {
   return (
     <TouchableOpacity
+      activeOpacity={0.6}
       style={tw`mb-4 rounded-lg overflow-hidden`}
       onPress={onPress}
     >
@@ -50,7 +43,7 @@ const CharacterCard = ({ data, selected, onPress }: CharacterCardProps) => {
 
         <View style={tw`flex-1 p-4`}>
           <Text style={tw`font-medium text-sm text-white`} numberOfLines={1}>
-            {`Birth year: ${data.gender}`}
+            {`Gender: ${data.gender}`}
           </Text>
           <Text style={tw`font-medium text-sm text-white`} numberOfLines={1}>
             {`Birth year: ${data.birth_year}`}
@@ -65,5 +58,5 @@ const CharacterCard = ({ data, selected, onPress }: CharacterCardProps) => {
 
 export default memo(
   CharacterCard,
-  (prev, next) => prev.selected === next.selected && prev.data === next.data,
+  (prev, next) => JSON.stringify(prev.data) === JSON.stringify(next.data),
 )

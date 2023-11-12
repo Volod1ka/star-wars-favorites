@@ -1,4 +1,5 @@
 import tw from '@tools/tailwind'
+import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View } from 'react-native'
 
@@ -11,4 +12,4 @@ const FavouritesScreen = () => {
   )
 }
 
-export default FavouritesScreen
+export default observer(FavouritesScreen)

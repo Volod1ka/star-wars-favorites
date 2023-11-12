@@ -26,7 +26,7 @@ export type CharacterResponseData = CharacterBaseInfo &
 export type CharacterListResponseData = {
   count: number
   hasNextPage: boolean
-  characters: Character[]
+  characters: CharacterShortData[]
 }
 
 // #endregion
@@ -52,3 +52,11 @@ export type CharacterExtraInfo = {
 }
 
 export type Character = CharacterBaseInfo & CharacterExtraInfo
+
+export type CharacterShortData = Pick<
+  Character,
+  'name' | 'birth_year' | 'gender' | 'url'
+> & {
+  homeworldName: Character['homeworld']['name']
+  favorite: boolean
+}

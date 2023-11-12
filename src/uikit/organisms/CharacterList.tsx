@@ -1,40 +1,31 @@
-import type { Character } from '@models/characters'
+import type { CharacterShortData } from '@models/characters'
 import { FlashList, type FlashListProps } from '@shopify/flash-list'
 import tw from '@tools/tailwind'
 import { CharacterCard } from '@uikit/molecules/rows'
 
-export interface CharacterListProps extends Partial<FlashListProps<Character>> {
-  characters: Character[]
-  selectedCharacters: Character[]
-  onPressCharacter?: (url: string) => void
+export type CharacterListProps = Partial<FlashListProps<CharacterShortData>> & {
+  onPressCharacter?: (data: CharacterShortData) => void
 }
 
 const CharacterList = ({
-  characters = [],
-  selectedCharacters = [],
+  data = [],
   onPressCharacter,
   ...props
 }: CharacterListProps) => {
   return (
     <FlashList
-      contentContainerStyle={tw`px-4 pt-4`}
-      indicatorStyle="black"
+      indicatorStyle="white"
+      estimatedItemSize={50}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
-      keyExtractor={(_, index) => `character-${index}`}
+      contentContainerStyle={tw`px-4 pt-4`}
+      // TODO
+      // ListEmptyComponent={<Text style={tw`text-white`}>No DATA</Text>}
       {...props}
-      estimatedItemSize={100}
-      data={characters}
+      data={data}
+      keyExtractor={(_, index) => `character-${index}`}
       renderItem={({ item }) => (
-        <CharacterCard
-          data={{
-            name: item.name,
-            birth_year: item.birth_year,
-            gender: item.gender,
-            homeworldName: item.homeworld.name,
-          }}
-          onPress={() => onPressCharacter?.(item.url)}
-        />
+        <CharacterCard data={item} onPress={() => onPressCharacter?.(item)} />
       )}
     />
   )
