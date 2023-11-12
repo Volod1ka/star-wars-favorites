@@ -1,5 +1,6 @@
 import type { CharacterShortData } from '@models/characters'
 import tw from '@tools/tailwind'
+import { NotchContainer } from '@uikit/atoms'
 import { memo } from 'react'
 import {
   Text,
@@ -11,17 +12,6 @@ import {
 export type CharacterCardProps = Pick<TouchableOpacityProps, 'onPress'> & {
   data: CharacterShortData
 }
-
-const NotchContainer = () => (
-  <View style={tw`flex-row justify-between`}>
-    <View
-      style={tw`w-1/2 h-0 border-t-[14px] border-r-[14px] border-r-transparent border-t-primary-dark`}
-    />
-    <View
-      style={tw`w-1/4 h-0 border-t-[14px] border-l-[14px] border-l-transparent border-t-primary-dark`}
-    />
-  </View>
-)
 
 const CharacterCard = ({ data, onPress }: CharacterCardProps) => {
   return (
