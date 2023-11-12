@@ -3,26 +3,23 @@ import { useNavigation } from '@react-navigation/native'
 import type { RootStackScreenProps } from '@screens'
 import tw from '@tools/tailwind'
 import { CharacterList } from '@uikit/organisms'
-import { useCallback } from 'react'
-import { Text, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { View } from 'react-native'
 
 const CharactersScreen = () => {
   const navigation = useNavigation<RootStackScreenProps<'Home'>['navigation']>()
 
   const charactersQuery = useCharactersQuery()
 
-  const onPressCharacter = useCallback(
-    (url: string) => {
-      navigation.navigate('CharacterInfo', { url })
-    },
-    [charactersQuery.data],
-  )
+  const onPressCharacter = (url: string) => {
+    navigation.navigate('CharacterInfo', { url })
+  }
 
+  // TODO
   const onPressNextPage = () => {
     charactersQuery.fetchNextPage()
   }
 
+  // TODO
   const disabledNextPage =
     charactersQuery.isFetching ||
     charactersQuery.isFetchingNextPage ||
@@ -30,21 +27,13 @@ const CharactersScreen = () => {
 
   // TODO: remove it during the build UI phase
   return (
-    <SafeAreaView style={tw`flex-1`}>
+    <View style={tw`flex-1`}>
       <CharacterList
         characters={charactersQuery.data.characters}
         selectedCharacters={[]}
         onPressCharacter={onPressCharacter}
       />
-
-      <View>
-        {disabledNextPage || (
-          <Text style={tw`self-center`} onPress={onPressNextPage}>
-            NEXT PAGE
-          </Text>
-        )}
-      </View>
-    </SafeAreaView>
+    </View>
   )
 }
 

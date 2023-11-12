@@ -1,5 +1,6 @@
 package com.swf;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import android.os.Bundle;
 
 import com.facebook.react.ReactActivity;
@@ -21,6 +22,7 @@ public class MainActivity extends ReactActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(null);
+    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
   }
 
   /**

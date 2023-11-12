@@ -23,7 +23,7 @@ const RootRouter = () => {
       screenOptions={{
         headerShown: false,
         headerShadowVisible: false,
-        cardStyle: tw`bg-gray-400`,
+        cardStyle: tw`bg-black`,
         ...TransitionPresets.SlideFromRightIOS,
       }}
     >

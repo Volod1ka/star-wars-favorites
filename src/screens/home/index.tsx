@@ -1,3 +1,4 @@
+import { LogoIcon } from '@assets/icons'
 import {
   createBottomTabNavigator,
   type BottomTabScreenProps,
@@ -7,6 +8,8 @@ import type { StackScreenProps } from '@react-navigation/stack'
 import type { RootStackParamList } from '@screens'
 import tw from '@tools/tailwind'
 import { useTranslation } from 'react-i18next'
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import CharactersScreen from './Characters'
 import FavouritesScreen from './Favourites'
 
@@ -26,17 +29,26 @@ const Tab = createBottomTabNavigator<HomeTabParamList>()
 const HomeTabScreen = () => {
   const { t } = useTranslation()
 
+  const insets = useSafeAreaInsets()
+
   return (
     <Tab.Navigator
       initialRouteName="Characters"
-      sceneContainerStyle={tw`bg-gray-400`}
+      sceneContainerStyle={tw`bg-black`}
       screenOptions={{
         headerTitleAlign: 'center',
+        headerShown: true,
         headerShadowVisible: false,
-        tabBarStyle: tw`h-23 rounded-xl mx-5 mb-5 shadow-none`,
-        headerShown: false,
+        headerStyle: tw.style('bg-transparent', {
+          height: wp(20) + insets.top,
+        }),
+        headerTitle: () => (
+          <LogoIcon width={wp(30)} fill={tw.color('bg-white')} />
+        ),
+        tabBarStyle: tw`mx-4 mb-4 h-23 bg-primary-dark rounded-lg border-t-0`,
+        tabBarAllowFontScaling: false,
         tabBarItemStyle: tw`mx-3 h-18`,
-        tabBarLabelStyle: tw`font-bold text-xs`,
+        tabBarLabelStyle: tw`font-bold text-sm`,
       }}
     >
       <Tab.Screen

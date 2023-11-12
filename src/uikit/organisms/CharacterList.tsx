@@ -1,7 +1,7 @@
 import type { Character } from '@models/characters'
 import { FlashList, type FlashListProps } from '@shopify/flash-list'
 import tw from '@tools/tailwind'
-import { Text } from 'react-native'
+import { CharacterCard } from '@uikit/molecules/rows'
 
 export interface CharacterListProps extends Partial<FlashListProps<Character>> {
   characters: Character[]
@@ -17,7 +17,7 @@ const CharacterList = ({
 }: CharacterListProps) => {
   return (
     <FlashList
-      contentContainerStyle={tw`px-4 py-2`}
+      contentContainerStyle={tw`px-4 pt-4`}
       indicatorStyle="black"
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
@@ -26,13 +26,15 @@ const CharacterList = ({
       estimatedItemSize={100}
       data={characters}
       renderItem={({ item }) => (
-        // TODO: Add renderItem
-        <Text
-          style={tw`mx-5 mb-5`}
+        <CharacterCard
+          data={{
+            name: item.name,
+            birth_year: item.birth_year,
+            gender: item.gender,
+            homeworldName: item.homeworld.name,
+          }}
           onPress={() => onPressCharacter?.(item.url)}
-        >
-          {item.name}
-        </Text>
+        />
       )}
     />
   )
