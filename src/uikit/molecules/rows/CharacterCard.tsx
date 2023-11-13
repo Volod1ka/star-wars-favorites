@@ -10,7 +10,8 @@ import {
   type TouchableOpacityProps,
 } from 'react-native'
 
-export type CharacterCardProps = Pick<TouchableOpacityProps, 'onPress'> & {
+export interface CharacterCardProps
+  extends Pick<TouchableOpacityProps, 'onPress'> {
   data: CharacterShortData
 }
 
@@ -23,7 +24,7 @@ const CharacterCard = ({ data, onPress }: CharacterCardProps) => {
       style={tw`mb-4 rounded-lg overflow-hidden`}
       onPress={onPress}
     >
-      <View style={tw`p-4 bg-primary-dark`}>
+      <View style={tw`flex-1 p-4 bg-primary-dark`}>
         <Text style={tw`font-bold text-base text-white`} numberOfLines={1}>
           {`${data.name} | ${data.homeworldName}`}
         </Text>

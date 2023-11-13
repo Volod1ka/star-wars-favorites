@@ -3,11 +3,11 @@ import tw from '@tools/tailwind'
 import { useTranslation } from 'react-i18next'
 import { Text, View } from 'react-native'
 
-export type FansCounterProps = {
+export interface FansCounterProps {
   quantity: GenderRecalculation
 }
 
-export type CounterContainerProps = {
+export interface CounterContainerProps {
   title: string
   count: number
   rightGap?: boolean

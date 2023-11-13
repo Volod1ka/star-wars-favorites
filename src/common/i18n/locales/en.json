@@ -9,7 +9,8 @@
       "others": "Others Fans"
     },
     "list": {
-      "load_more": "Load more"
+      "load_more": "Load more",
+      "loaded": "All data is loaded"
     },
     "loading": {
       "default": "Loading..."

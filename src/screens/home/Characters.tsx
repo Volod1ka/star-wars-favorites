@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 import type { RootStackScreenProps } from '@screens'
 import useStore from '@stores'
 import tw from '@tools/tailwind'
+import { OutlinedButton } from '@uikit/atoms/buttons'
 import { CharacterList } from '@uikit/organisms'
 import { observer } from 'mobx-react-lite'
 import { useTranslation } from 'react-i18next'
@@ -19,6 +20,11 @@ const CharactersScreen = () => {
   const { favoritesStore } = useStore()
 
   const onPressCard = (data: CharacterShortData) => {
+    favoritesStore.updateFavoriteCharacters(data)
+
+    // todo
+    return
+
     navigation.navigate('CharacterInfo', { url: data.url })
   }
 
@@ -32,22 +38,31 @@ const CharactersScreen = () => {
   )
 
   const disabledLoadMore =
-    charactersQuery.isFetching ||
-    charactersQuery.isFetchingNextPage ||
-    !charactersQuery.data.hasNextPage
+    charactersQuery.isFetching || charactersQuery.isFetchingNextPage
 
   return (
     <View style={tw`flex-1`}>
-      <CharacterList data={characters} onPressCard={onPressCard} />
-
-      {disabledLoadMore || (
-        <Text
-          style={tw`self-center text-white text-base font-bold`}
-          onPress={() => charactersQuery.fetchNextPage()}
-        >
-          {t('ui.list.load_more')}
-        </Text>
-      )}
+      <CharacterList
+        data={characters}
+        onPressCard={onPressCard}
+        ListFooterComponent={
+          <View style={tw`pb-4 justify-center items-center`}>
+            {charactersQuery.data.hasNextPage ? (
+              <OutlinedButton
+                disabled={disabledLoadMore}
+                title={t('ui.list.load_more')}
+                onPress={() => charactersQuery.fetchNextPage()}
+              />
+            ) : (
+              <Text
+                style={tw`font-bold text-primary-dark text-base text-center`}
+              >
+                {t('ui.list.loaded')}
+              </Text>
+            )}
+          </View>
+        }
+      />
     </View>
   )
 }

@@ -1,7 +1,7 @@
 import tw from '@tools/tailwind'
 import { Text, View } from 'react-native'
 
-export type LabelProps = {
+export interface LabelProps {
   title: string
   description: string
 }

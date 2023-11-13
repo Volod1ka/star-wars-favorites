@@ -2,7 +2,7 @@ import LottieView, { type LottieViewProps } from 'lottie-react-native'
 import { forwardRef } from 'react'
 import * as Animations from './assets'
 
-export type AnimationProps = Omit<LottieViewProps, 'source'> & {
+export interface AnimationProps extends Omit<LottieViewProps, 'source'> {
   name: keyof typeof Animations
 }
 
