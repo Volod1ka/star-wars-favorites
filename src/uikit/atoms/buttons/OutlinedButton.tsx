@@ -32,6 +32,10 @@ const OutlinedButton = ({
       onPress={onPress}
       disabled={disabled}
     >
+      <Text style={tw`font-bold text-white text-base text-center`}>
+        {title.toLocaleUpperCase()}
+      </Text>
+
       {loading && (
         <ActivityIndicator
           style={tw`absolute self-center`}
@@ -39,9 +43,6 @@ const OutlinedButton = ({
           size={'large'}
         />
       )}
-      <Text style={tw`font-bold text-white text-base text-center`}>
-        {title.toLocaleUpperCase()}
-      </Text>
     </TouchableOpacity>
   )
 }

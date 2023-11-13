@@ -1,8 +1,13 @@
 import tw from '@tools/tailwind'
-import { View } from 'react-native'
+import { View, type ViewProps } from 'react-native'
 
-const NotchContainer = () => (
-  <View style={tw`flex-row justify-between`}>
+export interface NotchContainerPros extends ViewProps {}
+
+const NotchContainer = ({ style, ...props }: NotchContainerPros) => (
+  <View
+    {...props}
+    style={tw.style(style as object, `flex-row justify-between`)}
+  >
     <View
       style={tw`w-1/2 h-0 border-t-[14px] border-r-[14px] border-r-transparent border-t-primary-dark`}
     />
