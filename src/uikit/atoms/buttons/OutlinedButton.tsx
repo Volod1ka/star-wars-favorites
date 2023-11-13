@@ -13,7 +13,7 @@ export interface OutlinedButtonProps
 }
 
 const OutlinedButton = ({
-  title,
+  title = '',
   disabled = false,
   loading = false,
   onPress,

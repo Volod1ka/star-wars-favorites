@@ -11,7 +11,8 @@
     "list": {
       "empty": "Data is empty",
       "load_more": "Load more",
-      "loaded": "All data is loaded"
+      "loaded": "All data is loaded",
+      "clear_fans": "Clear fans"
     },
     "loading": {
       "default": "Loading..."

@@ -3,12 +3,16 @@ import { useNavigation } from '@react-navigation/native'
 import type { RootStackScreenProps } from '@screens'
 import useStore from '@stores'
 import tw from '@tools/tailwind'
+import { CroppedButton } from '@uikit/atoms/buttons'
 import { FansCounter } from '@uikit/molecules'
 import { CharacterList } from '@uikit/organisms'
 import { observer } from 'mobx-react-lite'
+import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 
 const FavouritesScreen = () => {
+  const { t } = useTranslation()
+
   const navigation = useNavigation<RootStackScreenProps<'Home'>['navigation']>()
 
   const { favoritesStore } = useStore()
@@ -21,6 +25,10 @@ const FavouritesScreen = () => {
     favoritesStore.updateFavoriteCharacters(data)
   }
 
+  const onPressClearFans = () => {
+    favoritesStore.clearAll()
+  }
+
   return (
     <View style={tw`flex-1`}>
       <FansCounter quantity={favoritesStore.genderRecalculation} />
@@ -31,6 +39,16 @@ const FavouritesScreen = () => {
         onPressCard={onPressCard}
         onSelectFavorite={onSelectFavorite}
       />
+
+      <View
+        style={tw`absolute bottom-1 left-0 right-0 items-center`}
+        pointerEvents="box-none"
+      >
+        <CroppedButton
+          title={t('ui.list.clear_fans')}
+          onPress={onPressClearFans}
+        />
+      </View>
     </View>
   )
 }
