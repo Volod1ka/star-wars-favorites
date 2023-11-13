@@ -49,22 +49,19 @@ const HomeTabScreen = () => {
         tabBarAllowFontScaling: false,
         tabBarItemStyle: tw`mx-3 h-18`,
         tabBarLabelStyle: tw`font-bold text-sm`,
+        tabBarActiveTintColor: tw.color('bg-golden'),
       }}
     >
       <Tab.Screen
         name="Characters"
         component={CharactersScreen}
-        options={{
-          title: t('ui.navigation.characters'),
-        }}
+        options={{ title: t('ui.navigation.characters') }}
       />
 
       <Tab.Screen
         name="Favourites"
         component={FavouritesScreen}
-        options={{
-          title: t('ui.navigation.favourites'),
-        }}
+        options={{ title: t('ui.navigation.favourites') }}
       />
     </Tab.Navigator>
   )

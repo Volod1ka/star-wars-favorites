@@ -12,7 +12,7 @@ export type CounterContainerProps = {
   rightGap?: boolean
 }
 
-const CounterContainer = ({
+export const CounterContainer = ({
   title,
   count,
   rightGap = false,

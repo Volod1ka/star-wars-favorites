@@ -16,9 +16,7 @@ const CharactersScreen = () => {
   const { favoritesStore } = useStore()
 
   const onPressCard = (data: CharacterShortData) => {
-    favoritesStore.updateFavoriteCharacters(data)
-    // TODO
-    // navigation.navigate('CharacterInfo', { url })
+    navigation.navigate('CharacterInfo', { url: data.url })
   }
 
   const characters: CharacterShortData[] = charactersQuery.data.characters.map(
@@ -41,7 +39,7 @@ const CharactersScreen = () => {
 
       {disabledLoadMore || (
         <Text
-          style={tw`self-center text-white text-base font-semibold`}
+          style={tw`self-center text-white text-base font-bold`}
           onPress={() => charactersQuery.fetchNextPage()}
         >
           LOAD MORE

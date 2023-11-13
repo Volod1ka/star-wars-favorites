@@ -27,5 +27,3 @@ const FavouritesScreen = () => {
 }
 
 export default observer(FavouritesScreen)
-
-// TODO <Animation name="ArrowBack" style={tw.style({ height: hp(80) })} />
