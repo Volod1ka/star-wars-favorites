@@ -45,7 +45,7 @@ const HomeTabScreen = () => {
         headerTitle: () => (
           <LogoIcon width={wp(30)} fill={tw.color('bg-white')} />
         ),
-        tabBarStyle: tw`mx-4 mb-4 h-23 bg-primary-dark rounded-lg border-t-0`,
+        tabBarStyle: tw`-mt-1 mx-4 mb-4 h-23 bg-primary-dark rounded-lg border-t-0`,
         tabBarAllowFontScaling: false,
         tabBarItemStyle: tw`mx-3 h-18`,
         tabBarLabelStyle: tw`font-bold text-sm`,

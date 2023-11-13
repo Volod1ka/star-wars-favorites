@@ -1,3 +1,4 @@
+import { Heart } from '@assets/icons'
 import type { CharacterShortData } from '@models/characters'
 import tw from '@tools/tailwind'
 import { NotchContainer } from '@uikit/atoms'
@@ -13,9 +14,14 @@ import {
 export interface CharacterCardProps
   extends Pick<TouchableOpacityProps, 'onPress'> {
   data: CharacterShortData
+  onSelectFavorite?: (data: CharacterShortData) => void
 }
 
-const CharacterCard = ({ data, onPress }: CharacterCardProps) => {
+const CharacterCard = ({
+  data,
+  onPress,
+  onSelectFavorite,
+}: CharacterCardProps) => {
   const { t } = useTranslation()
 
   return (
@@ -46,6 +52,19 @@ const CharacterCard = ({ data, onPress }: CharacterCardProps) => {
             {t('ui.card.birth_year', { date: data.birth_year })}
           </Text>
         </View>
+
+        <TouchableOpacity
+          style={tw`absolute left-4 top-2 w-7 h-7 justify-center items-center rounded-full`}
+          onPress={() => onSelectFavorite?.(data)}
+        >
+          <Heart
+            width={20}
+            height={20}
+            strokeWidth={2}
+            stroke={tw.color('bg-golden')}
+            fill={tw.color(data.favorite ? 'bg-golden' : 'bg-transparent')}
+          />
+        </TouchableOpacity>
       </View>
 
       <NotchContainer />

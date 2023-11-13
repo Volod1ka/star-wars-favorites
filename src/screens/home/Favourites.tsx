@@ -17,15 +17,19 @@ const FavouritesScreen = () => {
     navigation.navigate('CharacterInfo', { url: data.url })
   }
 
+  const onSelectFavorite = (data: CharacterShortData) => {
+    favoritesStore.updateFavoriteCharacters(data)
+  }
+
   return (
     <View style={tw`flex-1`}>
       <FansCounter quantity={favoritesStore.genderRecalculation} />
 
       <CharacterList
-        extraData={'FavouritesScreen'}
-        contentContainerStyle={tw`px-4`}
+        contentContainerStyle={tw`px-4 pb-1`}
         data={[...favoritesStore.characters]}
         onPressCard={onPressCard}
+        onSelectFavorite={onSelectFavorite}
       />
     </View>
   )

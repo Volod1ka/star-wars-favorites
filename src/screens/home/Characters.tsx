@@ -24,6 +24,10 @@ const CharactersScreen = () => {
     navigation.navigate('CharacterInfo', { url: data.url })
   }
 
+  const onSelectFavorite = (data: CharacterShortData) => {
+    favoritesStore.updateFavoriteCharacters(data)
+  }
+
   if (!charactersQuery.isFetched) {
     return <LoadingBanner />
   }
@@ -45,9 +49,10 @@ const CharactersScreen = () => {
       <CharacterList
         data={characters}
         onPressCard={onPressCard}
+        onSelectFavorite={onSelectFavorite}
         ListFooterComponent={
           !characters.length ? null : (
-            <View style={tw`pb-4 justify-center items-center`}>
+            <View style={tw`pb-5 justify-center items-center`}>
               {charactersQuery.data.hasNextPage ? (
                 <OutlinedButton
                   disabled={disabledLoadMore}

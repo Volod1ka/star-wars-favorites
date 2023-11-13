@@ -8,11 +8,13 @@ import { Text } from 'react-native'
 export interface CharacterListProps
   extends Partial<FlashListProps<CharacterShortData>> {
   onPressCard?: (data: CharacterShortData) => void
+  onSelectFavorite?: (data: CharacterShortData) => void
 }
 
 const CharacterList = ({
   data = [],
   onPressCard,
+  onSelectFavorite,
   ...props
 }: CharacterListProps) => {
   const { t } = useTranslation()
@@ -34,7 +36,11 @@ const CharacterList = ({
       data={data}
       keyExtractor={(_, index) => `character-${index}`}
       renderItem={({ item }) => (
-        <CharacterCard data={item} onPress={() => onPressCard?.(item)} />
+        <CharacterCard
+          data={item}
+          onPress={() => onPressCard?.(item)}
+          onSelectFavorite={onSelectFavorite}
+        />
       )}
     />
   )
