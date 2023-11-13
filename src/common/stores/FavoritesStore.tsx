@@ -1,15 +1,16 @@
+import { config } from '@hooks'
 import type { CharacterShortData } from '@models/characters'
 import type { Gender, GenderRecalculation } from '@models/stores'
 import type { RootStore } from '@stores/RootStore'
 import { makeAutoObservable } from 'mobx'
 
-const initGenderRecalculation: GenderRecalculation = {
+const INIT_GENDER_RECALCULATION: GenderRecalculation = {
   female: 0,
   male: 0,
   others: 0,
 }
 
-const exceptionOtherGender: Gender[] = ['female', 'male']
+const EXCEPTION_OTHER_GENDER: Gender[] = ['female', 'male']
 
 export default class FavoritesStore {
   rootStore: RootStore
@@ -19,7 +20,7 @@ export default class FavoritesStore {
   constructor(rootStore: RootStore) {
     this.rootStore = rootStore
     this.characters = []
-    this.genderRecalculation = initGenderRecalculation
+    this.genderRecalculation = INIT_GENDER_RECALCULATION
     makeAutoObservable(this)
   }
 
@@ -30,7 +31,7 @@ export default class FavoritesStore {
   ) => {
     const condition =
       gender === 'others'
-        ? !exceptionOtherGender.includes(character.gender as Gender)
+        ? !EXCEPTION_OTHER_GENDER.includes(character.gender as Gender)
         : character.gender === gender
 
     return sum + Number(condition)
@@ -48,7 +49,7 @@ export default class FavoritesStore {
     this.genderRecalculation.others = this.sumCharactersByGender('others')
   }
 
-  updateFavoriteCharacters = (favorite: CharacterShortData) => {
+  updateFavoriteCharacters = async (favorite: CharacterShortData) => {
     const present = this.characters.some(
       character => character.url === favorite.url,
     )
@@ -58,14 +59,28 @@ export default class FavoritesStore {
         character => character.url !== favorite.url,
       )
     } else {
-      this.characters.push({ ...favorite, favorite: true })
+      this.characters = [{ ...favorite, favorite: true }, ...this.characters]
     }
 
     this.updateGenderRecalculation()
+
+    await config.setStorageConfigValues([
+      { key: 'favorite_characters', value: this.characters },
+    ])
   }
 
   clearAll = () => {
     this.characters = []
-    this.genderRecalculation = initGenderRecalculation
+    this.genderRecalculation = INIT_GENDER_RECALCULATION
+    config.removeStorageConfigValues(['favorite_characters'])
+  }
+
+  loadFromStorageData = () => {
+    const storage = config.getStorageConfigValues(['favorite_characters'])
+
+    if (storage.favorite_characters?.length) {
+      this.characters = storage.favorite_characters
+      this.updateGenderRecalculation()
+    }
   }
 }

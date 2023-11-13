@@ -27,7 +27,7 @@ const FavouritesScreen = () => {
 
       <CharacterList
         contentContainerStyle={tw`px-4 pb-1`}
-        data={[...favoritesStore.characters]}
+        data={favoritesStore.characters}
         onPressCard={onPressCard}
         onSelectFavorite={onSelectFavorite}
       />
