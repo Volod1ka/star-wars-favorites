@@ -9,6 +9,7 @@
       "others": "Others Fans"
     },
     "list": {
+      "empty": "Data is empty",
       "load_more": "Load more",
       "loaded": "All data is loaded"
     },

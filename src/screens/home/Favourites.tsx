@@ -14,11 +14,6 @@ const FavouritesScreen = () => {
   const { favoritesStore } = useStore()
 
   const onPressCard = (data: CharacterShortData) => {
-    favoritesStore.updateFavoriteCharacters(data)
-
-    // todo
-    return
-
     navigation.navigate('CharacterInfo', { url: data.url })
   }
 

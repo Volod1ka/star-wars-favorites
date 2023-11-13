@@ -5,6 +5,7 @@ import type { RootStackScreenProps } from '@screens'
 import useStore from '@stores'
 import tw from '@tools/tailwind'
 import { OutlinedButton } from '@uikit/atoms/buttons'
+import { LoadingBanner } from '@uikit/molecules'
 import { CharacterList } from '@uikit/organisms'
 import { observer } from 'mobx-react-lite'
 import { useTranslation } from 'react-i18next'
@@ -20,12 +21,11 @@ const CharactersScreen = () => {
   const { favoritesStore } = useStore()
 
   const onPressCard = (data: CharacterShortData) => {
-    favoritesStore.updateFavoriteCharacters(data)
-
-    // todo
-    return
-
     navigation.navigate('CharacterInfo', { url: data.url })
+  }
+
+  if (!charactersQuery.isFetched) {
+    return <LoadingBanner />
   }
 
   const characters: CharacterShortData[] = charactersQuery.data.characters.map(
@@ -46,21 +46,24 @@ const CharactersScreen = () => {
         data={characters}
         onPressCard={onPressCard}
         ListFooterComponent={
-          <View style={tw`pb-4 justify-center items-center`}>
-            {charactersQuery.data.hasNextPage ? (
-              <OutlinedButton
-                disabled={disabledLoadMore}
-                title={t('ui.list.load_more')}
-                onPress={() => charactersQuery.fetchNextPage()}
-              />
-            ) : (
-              <Text
-                style={tw`font-bold text-primary-dark text-base text-center`}
-              >
-                {t('ui.list.loaded')}
-              </Text>
-            )}
-          </View>
+          !characters.length ? null : (
+            <View style={tw`pb-4 justify-center items-center`}>
+              {charactersQuery.data.hasNextPage ? (
+                <OutlinedButton
+                  disabled={disabledLoadMore}
+                  loading={disabledLoadMore}
+                  title={t('ui.list.load_more')}
+                  onPress={() => charactersQuery.fetchNextPage()}
+                />
+              ) : (
+                <Text
+                  style={tw`font-bold text-primary-dark text-base text-center`}
+                >
+                  {t('ui.list.loaded')}
+                </Text>
+              )}
+            </View>
+          )
         }
       />
     </View>

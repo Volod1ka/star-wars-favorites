@@ -1,5 +1,6 @@
 import tw from '@tools/tailwind'
 import {
+  ActivityIndicator,
   Text,
   TouchableOpacity,
   type TouchableOpacityProps,
@@ -8,11 +9,13 @@ import {
 export interface OutlinedButtonProps
   extends Pick<TouchableOpacityProps, 'onPress' | 'disabled' | 'style'> {
   title: string
+  loading?: boolean
 }
 
 const OutlinedButton = ({
   title,
-  disabled,
+  disabled = false,
+  loading = false,
   onPress,
   style,
 }: OutlinedButtonProps) => {
@@ -20,7 +23,7 @@ const OutlinedButton = ({
     <TouchableOpacity
       activeOpacity={0.6}
       style={tw.style(
-        'py-2 px-8 bg-black rounded-full border-2 border-golden',
+        'py-2 px-8 justify-center bg-black rounded-full border-2 border-golden overflow-hidden',
         style as object,
         {
           'opacity-30': !!disabled,
@@ -29,6 +32,13 @@ const OutlinedButton = ({
       onPress={onPress}
       disabled={disabled}
     >
+      {loading && (
+        <ActivityIndicator
+          style={tw`absolute self-center`}
+          color={tw.color('bg-golden')}
+          size={'large'}
+        />
+      )}
       <Text style={tw`font-bold text-white text-base text-center`}>
         {title.toLocaleUpperCase()}
       </Text>
