@@ -5,10 +5,13 @@ import tw from '@tools/tailwind'
 import { Label, Separator } from '@uikit/atoms'
 import { LoadingBanner } from '@uikit/molecules'
 import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ScrollView, Text, View } from 'react-native'
 import { toStringFilms, toStringNamesOfList } from './tools'
 
 const CharacterInfoScreen = () => {
+  const { t } = useTranslation()
+
   const navigation = useNavigation<RootStackScreenProps<'Home'>['navigation']>()
   const {
     params: { url },
@@ -20,7 +23,7 @@ const CharacterInfoScreen = () => {
     navigation.setOptions({
       headerTitle: characterQuery.isFetched
         ? characterQuery.data?.name || ''
-        : 'Loading...',
+        : t('ui.loading.default'),
     })
   }, [characterQuery.isFetched])
 
@@ -28,32 +31,42 @@ const CharacterInfoScreen = () => {
     return <LoadingBanner />
   }
 
+  const character = characterQuery.data
+
   return (
     <ScrollView style={tw`flex-1`} contentContainerStyle={tw`p-4 pb-8`}>
-      <Text style={tw`font-bold text-2xl text-white`}>
-        {characterQuery.data.name}
+      <Text style={tw`font-bold text-2xl text-white`}>{character.name}</Text>
+      <Text style={tw`mb-2 font-medium text-sm text-white`}>
+        {t('screens.character_info.short_about', {
+          gender: character.gender,
+          date: character.birth_year,
+        })}
       </Text>
-      <Text
-        style={tw`mb-2 font-medium text-sm text-white`}
-      >{`Gender: ${characterQuery.data.gender}\nBirth year: ${characterQuery.data.birth_year}`}</Text>
 
       <Separator />
 
       <Label
-        title={'Appearances'}
-        description={toStringFilms(characterQuery.data.films)}
+        title={t('screens.character_info.appearances')}
+        description={toStringFilms(character.films)}
       />
 
       <Separator />
 
       <View style={tw`flex-row`}>
         <Label
-          title={'Appearance'}
-          description={`Eye color: ${characterQuery.data.eye_color}\nHair color: ${characterQuery.data.hair_color}\nSkin color: ${characterQuery.data.skin_color}`}
+          title={t('screens.character_info.appearance')}
+          description={t('screens.character_info.appearance_about', {
+            eye: character.eye_color,
+            hair: character.hair_color,
+            skin: character.skin_color,
+          })}
         />
         <Label
-          title={'Dimensions'}
-          description={`Height: ${characterQuery.data.height}cm\nMass: ${characterQuery.data.mass}kg`}
+          title={t('screens.character_info.dimensions')}
+          description={t('screens.character_info.dimensions_about', {
+            height: character.height,
+            mass: character.mass,
+          })}
         />
       </View>
 
@@ -61,11 +74,11 @@ const CharacterInfoScreen = () => {
 
       <View style={tw`flex-row`}>
         <Label
-          title={'Home world'}
+          title={t('screens.character_info.home_world')}
           description={characterQuery.data.homeworld.name}
         />
         <Label
-          title={'Species'}
+          title={t('screens.character_info.species')}
           description={toStringNamesOfList(characterQuery.data.species)}
         />
       </View>
@@ -74,11 +87,11 @@ const CharacterInfoScreen = () => {
 
       <View style={tw`flex-row`}>
         <Label
-          title={'Starships'}
+          title={t('screens.character_info.starships')}
           description={toStringNamesOfList(characterQuery.data.starships)}
         />
         <Label
-          title={'Vehicle'}
+          title={t('screens.character_info.vehicle')}
           description={toStringNamesOfList(characterQuery.data.vehicles)}
         />
       </View>

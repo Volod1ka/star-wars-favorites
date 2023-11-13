@@ -1,3 +1,4 @@
+import { t } from '@i18n'
 import type { Film } from '@models/films'
 import { numberToRoman } from '@tools/math'
 
@@ -6,9 +7,10 @@ export const getNextLine = (index: number, lastItem: number) =>
 
 export const toStringFilms = (films: Film[]) =>
   films.reduce((prevString, film, index) => {
-    const filmInfo = `Star Wars: ${film.title} (Episode ${numberToRoman(
-      film.episode_id,
-    )})`
+    const filmInfo = t('screens.character_info.film', {
+      film: film.title,
+      episode: numberToRoman(film.episode_id),
+    })
 
     return `${prevString}${filmInfo}${getNextLine(index, films.length)}`
   }, '')

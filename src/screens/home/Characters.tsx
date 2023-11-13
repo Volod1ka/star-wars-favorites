@@ -6,9 +6,12 @@ import useStore from '@stores'
 import tw from '@tools/tailwind'
 import { CharacterList } from '@uikit/organisms'
 import { observer } from 'mobx-react-lite'
+import { useTranslation } from 'react-i18next'
 import { Text, View } from 'react-native'
 
 const CharactersScreen = () => {
+  const { t } = useTranslation()
+
   const navigation = useNavigation<RootStackScreenProps<'Home'>['navigation']>()
 
   const charactersQuery = useCharactersQuery()
@@ -42,7 +45,7 @@ const CharactersScreen = () => {
           style={tw`self-center text-white text-base font-bold`}
           onPress={() => charactersQuery.fetchNextPage()}
         >
-          LOAD MORE
+          {t('ui.list.load_more')}
         </Text>
       )}
     </View>

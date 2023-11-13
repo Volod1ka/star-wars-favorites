@@ -1,5 +1,6 @@
 import type { GenderRecalculation } from '@models/stores'
 import tw from '@tools/tailwind'
+import { useTranslation } from 'react-i18next'
 import { Text, View } from 'react-native'
 
 export type FansCounterProps = {
@@ -46,11 +47,24 @@ export const CounterContainer = ({
 )
 
 const FansCounter = ({ quantity }: FansCounterProps) => {
+  const { t } = useTranslation()
+
   return (
     <View style={tw.style(`mb-4 px-4 flex-row w-full`)}>
-      <CounterContainer title="Female Fans" count={quantity.female} rightGap />
-      <CounterContainer title="Male Fans" count={quantity.male} rightGap />
-      <CounterContainer title="Others Fans" count={quantity.others} />
+      <CounterContainer
+        title={t('ui.gender_fans.female')}
+        count={quantity.female}
+        rightGap
+      />
+      <CounterContainer
+        title={t('ui.gender_fans.male')}
+        count={quantity.male}
+        rightGap
+      />
+      <CounterContainer
+        title={t('ui.gender_fans.others')}
+        count={quantity.others}
+      />
     </View>
   )
 }

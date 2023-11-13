@@ -2,6 +2,7 @@ import type { CharacterShortData } from '@models/characters'
 import tw from '@tools/tailwind'
 import { NotchContainer } from '@uikit/atoms'
 import { memo } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Text,
   TouchableOpacity,
@@ -14,6 +15,8 @@ export type CharacterCardProps = Pick<TouchableOpacityProps, 'onPress'> & {
 }
 
 const CharacterCard = ({ data, onPress }: CharacterCardProps) => {
+  const { t } = useTranslation()
+
   return (
     <TouchableOpacity
       activeOpacity={0.6}
@@ -39,7 +42,7 @@ const CharacterCard = ({ data, onPress }: CharacterCardProps) => {
             style={tw`font-medium text-sm text-white text-right`}
             numberOfLines={1}
           >
-            {`Birth year: ${data.birth_year}`}
+            {t('ui.card.birth_year', { date: data.birth_year })}
           </Text>
         </View>
       </View>
