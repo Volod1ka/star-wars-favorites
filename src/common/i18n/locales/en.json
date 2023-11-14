@@ -9,9 +9,13 @@
       "others": "Others Fans"
     },
     "list": {
-      "empty": "Data is empty",
+      "empty": "Oh... Data is empty",
       "load_more": "Load more",
-      "loaded": "All data is loaded",
+      "loaded": "Wow! All data is currently loaded",
+      "search": {
+        "title": "Oh! No results found for ",
+        "description": "\nPlease try another search or check the spelling"
+      },
       "clear_fans": "Clear fans"
     },
     "loading": {
@@ -20,7 +24,8 @@
     "navigation": {
       "characters": "Characters",
       "favourites": "Favourites"
-    }
+    },
+    "placeholder": { "search": "Search character" }
   },
   "screens": {
     "character_info": {

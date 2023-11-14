@@ -7,17 +7,26 @@ import { Text } from 'react-native'
 
 export interface CharacterListProps
   extends Partial<FlashListProps<CharacterShortData>> {
+  search?: string
   onPressCard?: (data: CharacterShortData) => void
   onSelectFavorite?: (data: CharacterShortData) => void
 }
 
 const CharacterList = ({
   data = [],
+  search = '',
   onPressCard,
   onSelectFavorite,
+  contentContainerStyle,
   ...props
 }: CharacterListProps) => {
   const { t } = useTranslation()
+
+  const getSearchTitle = (search: string) => [
+    t('ui.list.search.title'),
+    <Text style={tw`text-golden`}>{search}</Text>,
+    <Text style={tw`text-sm`}>{t('ui.list.search.description')}</Text>,
+  ]
 
   return (
     <FlashList
@@ -25,11 +34,11 @@ const CharacterList = ({
       estimatedItemSize={200}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={tw`px-4 pt-4`}
+      contentContainerStyle={tw.style(`pt-5`, contentContainerStyle)}
       nestedScrollEnabled
       ListEmptyComponent={
         <Text style={tw`my-4 font-bold text-white text-base text-center`}>
-          {t('ui.list.empty')}
+          {search.length ? getSearchTitle(search) : t('ui.list.empty')}
         </Text>
       }
       {...props}
