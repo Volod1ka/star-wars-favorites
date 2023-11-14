@@ -1,4 +1,4 @@
-import { LogoIcon } from '@assets/icons'
+import { CharactersIcon, HeartIcon, LogoIcon } from '@assets/icons'
 import {
   createBottomTabNavigator,
   type BottomTabScreenProps,
@@ -55,13 +55,27 @@ const HomeTabScreen = () => {
       <Tab.Screen
         name="Characters"
         component={CharactersScreen}
-        options={{ title: t('ui.navigation.characters') }}
+        options={{
+          title: t('ui.navigation.characters'),
+          tabBarIcon: ({ color, size }) => (
+            <CharactersIcon
+              width={size * 1.5}
+              height={size * 1.5}
+              fill={color}
+            />
+          ),
+        }}
       />
 
       <Tab.Screen
         name="Favourites"
         component={FavouritesScreen}
-        options={{ title: t('ui.navigation.favourites') }}
+        options={{
+          title: t('ui.navigation.favourites'),
+          tabBarIcon: ({ color, size }) => (
+            <HeartIcon width={size} height={size} fill={color} />
+          ),
+        }}
       />
     </Tab.Navigator>
   )

@@ -24,8 +24,12 @@ const CharacterList = ({
 
   const getSearchTitle = (search: string) => [
     t('ui.list.search.title'),
-    <Text style={tw`text-golden`}>{search}</Text>,
-    <Text style={tw`text-sm`}>{t('ui.list.search.description')}</Text>,
+    <Text key={'search-text'} style={tw`text-golden`}>
+      {search}
+    </Text>,
+    <Text key={'description-text'} style={tw`text-sm`}>
+      {t('ui.list.search.description')}
+    </Text>,
   ]
 
   return (

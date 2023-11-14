@@ -1,4 +1,4 @@
-import { Heart } from '@assets/icons'
+import { HeartIcon } from '@assets/icons'
 import type { CharacterShortData } from '@models/characters'
 import tw from '@tools/tailwind'
 import { NotchContainer } from '@uikit/atoms'
@@ -57,7 +57,7 @@ const CharacterCard = ({
           style={tw`absolute left-4 top-2 w-7 h-7 justify-center items-center rounded-full`}
           onPress={() => onSelectFavorite?.(data)}
         >
-          <Heart
+          <HeartIcon
             width={20}
             height={20}
             strokeWidth={2}
