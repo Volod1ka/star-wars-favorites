@@ -1,11 +1,9 @@
 import httpClient from '@api/httpClient'
 import type {
   Character,
-  CharacterExtraInfo,
   CharacterListResponseData,
   CharacterResponseData,
   CharacterShortData,
-  CharacterUrlsResponseData,
   CharactersResponseData,
 } from '@models/characters'
 import type { Film } from '@models/films'
@@ -13,8 +11,8 @@ import type { Homeworld } from '@models/homeworld'
 import type { Specie } from '@models/species'
 import type { Starship } from '@models/starships'
 import type { Vehicle } from '@models/vehicles'
-import { keyToUrl } from '@tools/common'
-import { fetchArrayOfUrl, isBaseUrlOfApi } from '@tools/url'
+import { asyncMap, keyToUrl } from '@tools/common'
+import { fetchArrayOfUrl, fetchDataOfUrl, isBaseUrlOfApi } from '@tools/url'
 import axios from 'axios'
 import { INIT_PAGE, charactersUrls } from './constants'
 
@@ -25,20 +23,23 @@ const getCharacters = async (
     keyToUrl(charactersUrls.root(pageParam)),
   )
 
-  const characters: CharacterShortData[] = await Promise.all(
-    response.data.results.map(async item => {
-      // TODO
-      // const homeworldResponse = await axios.get<Homeworld>(item.homeworld)
+  const characters = await asyncMap<CharacterResponseData, CharacterShortData>(
+    response.data.results,
+    async item => {
+      const homeworld = await fetchDataOfUrl<Homeworld>(
+        'homeworld',
+        item.homeworld,
+      )
 
       return {
         birth_year: item.birth_year,
         favorite: false,
         gender: item.gender,
-        homeworldName: 'homeworldName', // homeworldResponse.data.name,
+        homeworldName: homeworld.name,
         name: item.name,
         url: item.url,
       }
-    }),
+    },
   )
 
   return {
@@ -51,40 +52,19 @@ const getCharacters = async (
 const getCharacter = async (url: string): Promise<Character | null> => {
   if (!isBaseUrlOfApi(url)) return null
 
-  const response = await axios.get<CharacterResponseData>(url)
-  const extraData = await getCharacterUrlDetails(response.data)
-
-  return { ...response.data, ...extraData }
-}
-
-const getCharacterUrlDetails = async (
-  data: CharacterUrlsResponseData,
-): Promise<CharacterExtraInfo> => {
-  const [
-    filmsResponse,
-    homeworldResponse,
-    speciesResponse,
-    starshipsResponse,
-    vehiclesResponse,
-  ] = await Promise.all([
-    fetchArrayOfUrl<Film>(data.films),
-    axios.get<Homeworld>(data.homeworld),
-    fetchArrayOfUrl<Specie>(data.species),
-    fetchArrayOfUrl<Starship>(data.starships),
-    fetchArrayOfUrl<Vehicle>(data.vehicles),
+  const { data: character } = await axios.get<CharacterResponseData>(url)
+  const [films, homeworld, species, starships, vehicles] = await Promise.all([
+    fetchArrayOfUrl<Film>('film', character.films),
+    fetchDataOfUrl<Homeworld>('homeworld', character.homeworld),
+    fetchArrayOfUrl<Specie>('specie', character.species),
+    fetchArrayOfUrl<Starship>('starship', character.starships),
+    fetchArrayOfUrl<Vehicle>('vehicle', character.vehicles),
   ])
 
-  return {
-    films: filmsResponse.map(film => film.data),
-    homeworld: homeworldResponse.data,
-    species: speciesResponse.map(specie => specie.data),
-    starships: starshipsResponse.map(starship => starship.data),
-    vehicles: vehiclesResponse.map(vehicles => vehicles.data),
-  }
+  return { ...character, films, homeworld, species, starships, vehicles }
 }
 
 export default {
   getCharacter,
   getCharacters,
-  getCharacterUrlDetails,
 }
