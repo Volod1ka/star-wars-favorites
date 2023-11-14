@@ -24,6 +24,8 @@
       "@api": ["common/api/index"],
       "@api/*": ["common/api/*"],
       "@assets/*": ["assets/*"],
+      "@hooks": ["common/hooks/index"],
+      "@hooks/*": ["common/hooks/*"],
       "@i18n": ["common/i18n/index"],
       "@models/*": ["common/models/*"],
       "@screens": ["screens/index"],
@@ -34,5 +36,5 @@
       "@uikit/*": ["uikit/*"]
     }
   },
-  "exclude": ["node_modules", "babel.config.js", "jest.config.js"]
+  "exclude": ["node_modules", "babel.config.js"]
 }

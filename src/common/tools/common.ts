@@ -13,3 +13,10 @@ export const parseJSONToObject = (data?: string | null) => {
     return data
   }
 }
+
+export const asyncMap = async <TData, TResult>(
+  array: TData[],
+  asyncCallback: (item: TData) => Promise<TResult>,
+): Promise<TResult[]> => {
+  return await Promise.all(array.map(asyncCallback))
+}
